@@ -87,7 +87,6 @@ func SolvePart2(input []string) string {
 				if index > lastCharPosition && index != firstCharPosition {
 					lastChar = string(char)
 					lastCharPosition = index
-					break
 				}
 			}
 		}
