@@ -2,6 +2,7 @@ package aoc2023day1
 
 import (
 	"fmt"
+	"github.com/cyberinferno/advent-of-code/internal/utils"
 	"strconv"
 	"strings"
 )
@@ -21,9 +22,9 @@ func SolvePart1(input []string) string {
 			if char >= '0' && char <= '9' {
 				if firstChar == "" {
 					firstChar = string(char)
-				} else {
-					lastChar = string(char)
 				}
+
+				lastChar = string(char)
 			}
 		}
 
@@ -38,7 +39,7 @@ func SolvePart1(input []string) string {
 
 func SolvePart2(input []string) string {
 	sum := 0
-	for _, line := range input {
+	for i, line := range input {
 		firstChar := ""
 		firstCharPosition := -1
 		lastChar := ""
@@ -60,22 +61,24 @@ func SolvePart2(input []string) string {
 				if firstCharPosition == -1 {
 					firstCharPosition = index
 					firstChar = string(char)
-				} else {
-					lastCharPosition = index
-					lastChar = string(char)
 				}
+
+				lastCharPosition = index
+				lastChar = string(char)
 			}
 		}
 
 		for _, numberString := range numberStrings {
-			if strings.Contains(line, numberString) {
-				position := strings.Index(line, numberString)
+			positions := utils.FindAllStringPositions(line, numberString)
+			if len(positions) > 0 {
+				position := positions[0]
 				if firstCharPosition == -1 || position < firstCharPosition {
 					firstChar = numberStringToNumberMap[numberString]
 					firstCharPosition = position
 				}
 
-				if position > lastCharPosition && position != firstCharPosition {
+				position = positions[len(positions)-1]
+				if position > lastCharPosition {
 					lastChar = numberStringToNumberMap[numberString]
 					lastCharPosition = position
 				}
@@ -96,10 +99,13 @@ func SolvePart2(input []string) string {
 		}
 
 		current := firstChar
-		if lastCharPosition != -1 {
+		if lastCharPosition == -1 {
+			current += firstChar
+		} else {
 			current += lastChar
 		}
 
+		fmt.Printf("Line %d: %s\n", i+1, current)
 		currentInt, err := strconv.Atoi(current)
 		if err == nil {
 			sum += currentInt
