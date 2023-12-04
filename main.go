@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/cyberinferno/advent-of-code/internal/aoc2023day1"
+	"github.com/cyberinferno/advent-of-code/internal/aoc2023day2"
 	"os"
 )
 
@@ -46,6 +47,7 @@ func init() {
 	funcMap = map[string]map[string]func(input string){
 		"2023": {
 			"1": aoc2023day1.Run,
+			"2": aoc2023day2.Run,
 		},
 	}
 }
