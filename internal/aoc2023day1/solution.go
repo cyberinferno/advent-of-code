@@ -39,7 +39,7 @@ func SolvePart1(input []string) string {
 
 func SolvePart2(input []string) string {
 	sum := 0
-	for i, line := range input {
+	for _, line := range input {
 		firstChar := ""
 		firstCharPosition := -1
 		lastChar := ""
@@ -105,7 +105,6 @@ func SolvePart2(input []string) string {
 			current += lastChar
 		}
 
-		fmt.Printf("Line %d: %s\n", i+1, current)
 		currentInt, err := strconv.Atoi(current)
 		if err == nil {
 			sum += currentInt
